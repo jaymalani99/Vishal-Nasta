@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal Nasta — Cinematographer & DOP</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #8d9aab;
+    --bg-dark: #7a8799;
+    --bg-card: rgba(255,255,255,0.06);
+    --bg-overlay: rgba(20,25,30,0.88);
+    --text-primary: #f0ede8;
+    --text-secondary: rgba(240,237,232,0.6);
+    --text-label: rgba(240,237,232,0.45);
+    --border: rgba(240,237,232,0.12);
+    --border-hover: rgba(240,237,232,0.28);
+    --filter-active-bg: rgba(240,237,232,0.15);
+    --modal-bg: #111416;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(100,115,135,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(70,85,105,0.5) 0%, transparent 55%);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    cursor: default;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 48px;
+    background: rgba(141,154,171,0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .nav-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+  }
+
+  .nav-role {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  /* HERO */
+  .hero {
+    padding: 160px 48px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-label);
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+    max-width: 360px;
+    line-height: 1.7;
+  }
+
+  /* FILTERS */
+  .filters-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-label);
+    margin-right: 8px;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 0.5px solid var(--border);
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  .filter-btn.active {
+    background: var(--filter-active-bg);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  /* GRID */
+  .grid-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px 120px;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .video-card {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg-dark);
+  }
+
+  .video-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(15,20,25,0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 1;
+  }
+
+  .video-card:hover::after { opacity: 1; }
+
+  .video-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.35s ease;
+    filter: saturate(0.85);
+  }
+
+  .video-card:hover img {
+    transform: scale(1.04);
+    filter: saturate(1);
+  }
+
+  .card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 18px 20px;
+    z-index: 2;
+    transform: translateY(6px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .video-card:hover .card-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .card-category {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.55);
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 44px;
+    height: 44px;
+    border: 0.5px solid rgba(240,237,232,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+
+  .play-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--text-primary);
+    margin-left: 3px;
+  }
+
+  .video-card:hover .play-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* HIDDEN */
+  .video-card.hidden { display: none; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 13, 0.95);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: rgba(240,237,232,0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--text-primary); }
+
+  .modal-video-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    position: relative;
+  }
+
+  .modal-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .modal-meta {
+    margin-top: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-primary);
+  }
+
+  .modal-cat {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-label);
+  }
+
+  /* PLACEHOLDER THUMB */
+  .thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark);
+  }
+
+  .thumb-placeholder span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.18);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-left {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  .footer-right {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-label);
+  }
+
+  .footer-contact {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .footer-contact:hover { color: var(--text-primary); }
+
+  /* SCROLL hint */
+  .scroll-hint {
+    writing-mode: vertical-lr;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-label);
+    position: fixed;
+    right: 24px;
+    bottom: 48px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 0.5px;
+    height: 36px;
+    background: var(--border-hover);
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .filters-bar { padding: 0 24px 32px; }
+    .grid-wrapper { padding: 0 24px 80px; }
+    .video-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { padding: 32px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    .scroll-hint { display: none; }
+  }
+
+  @media (max-width: 560px) {
+    .video-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <span class="nav-name">Vishal Nasta</span>
+    <span class="nav-role">Cinematographer &amp; DOP</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="work">
+  <p class="hero-eyebrow">Selected Works — 2020–2025</p>
+  <h1 class="hero-title">Frame<br><em>by frame.</em></h1>
+  <p class="hero-sub">Commercials, corporate films, brand stories and advertising — shot with intention.</p>
+</section>
+
+<div class="filters-bar">
+  <span class="filter-label">Filter</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="commercial">Commercial</button>
+  <button class="filter-btn" data-filter="bts">BTS</button>
+  <button class="filter-btn" data-filter="corporate">Corporate</button>
+  <button class="filter-btn" data-filter="ads">Ads</button>
+</div>
+
+<div class="grid-wrapper">
+  <div class="video-grid" id="videoGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose">&#x2715; &nbsp; Close</button>
+    <div class="modal-video-wrap">
+      <video id="modalVideo" controls playsinline></video>
+    </div>
+    <div class="modal-meta">
+      <span class="modal-title" id="modalTitle"></span>
+      <span class="modal-cat" id="modalCat"></span>
+    </div>
+  </div>
+</div>
+
+<div class="scroll-hint">Scroll</div>
+
+<footer id="contact">
+  <div class="footer-left">Let's make something.</div>
+  <div>
+    <a href="mailto:Vishal.vrn.nasta93@gmail.com" class="footer-contact">Vishal.vrn.nasta93@gmail.com</a>
+  </div>
+  <div class="footer-right">&copy; 2025 Vishal Nasta</div>
+</footer>
+
+<script>
+const projects = [
+  { id: 1, title: "Brand Film — Untitled", category: "commercial", src: "", thumb: "" },
+  { id: 2, title: "Corporate Day — Sequence", category: "corporate", src: "", thumb: "" },
+  { id: 3, title: "Product Launch TVC", category: "ads", src: "", thumb: "" },
+  { id: 4, title: "Behind the Lens", category: "bts", src: "", thumb: "" },
+  { id: 5, title: "Director's Cut — Campaign", category: "commercial", src: "", thumb: "" },
+  { id: 6, title: "Talking Head — Series 01", category: "corporate", src: "", thumb: "" },
+  { id: 7, title: "30s Spot — Seasonal", category: "ads", src: "", thumb: "" },
+  { id: 8, title: "On Set — Behind the Scenes", category: "bts", src: "", thumb: "" },
+  { id: 9, title: "Brand Story — Launch", category: "commercial", src: "", thumb: "" },
+  { id: 10, title: "Internal Film — Annual Meet", category: "corporate", src: "", thumb: "" },
+  { id: 11, title: "Digital Ad — 15s", category: "ads", src: "", thumb: "" },
+  { id: 12, title: "Shoot Day — Raw Moments", category: "bts", src: "", thumb: "" },
+  { id: 13, title: "TV Commercial — Festive", category: "ads", src: "", thumb: "" },
+  { id: 14, title: "Brand Documentary", category: "commercial", src: "", thumb: "" },
+  { id: 15, title: "Leadership Film", category: "corporate", src: "", thumb: "" },
+];
+
+const catColors = {
+  commercial: "#c4a882",
+  corporate:  "#9aacb8",
+  ads:        "#b8a49a",
+  bts:        "#a8b89a",
+};
+
+const grid = document.getElementById('videoGrid');
+
+function buildCard(p) {
+  const card = document.createElement('div');
+  card.className = 'video-card';
+  card.dataset.category = p.category;
+
+  if (p.thumb) {
+    const img = document.createElement('img');
+    img.src = p.thumb;
+    img.alt = p.title;
+    img.loading = 'lazy';
+    card.appendChild(img);
+  } else {
+    const ph = document.createElement('div');
+    ph.className = 'thumb-placeholder';
+    ph.innerHTML = `<span>${p.category}</span>`;
+    card.appendChild(ph);
+  }
+
+  const playIcon = document.createElement('div');
+  playIcon.className = 'play-icon';
+  playIcon.innerHTML = `<svg viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>`;
+  card.appendChild(playIcon);
+
+  const info = document.createElement('div');
+  info.className = 'card-info';
+  info.innerHTML = `<div class="card-category">${p.category}</div><div class="card-title">${p.title}</div>`;
+  card.appendChild(info);
+
+  card.addEventListener('click', () => openModal(p));
+  return card;
+}
+
+projects.forEach(p => grid.appendChild(buildCard(p)));
+
+// FILTER
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.video-card').forEach(card => {
+      if (f === 'all' || card.dataset.category === f) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+});
+
+// MODAL
+const overlay = document.getElementById('modalOverlay');
+const modalVideo = document.getElementById('modalVideo');
+const modalTitle = document.getElementById('modalTitle');
+const modalCat = document.getElementById('modalCat');
+
+function openModal(p) {
+  if (!p.src) return;
+  modalVideo.src = p.src;
+  modalTitle.textContent = p.title;
+  modalCat.textContent = p.category;
+  overlay.classList.add('open');
+  modalVideo.play();
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  modalVideo.pause();
+  modalVideo.src = '';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
