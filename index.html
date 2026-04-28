@@ -511,7 +511,7 @@
 <script>
 const projects = [
   { id: 1, title: "Brand Film — Untitled", category: "commercial", src: "", thumb: "" },
-  { id: 2, title: "Corporate Day — Sequence", category: "corporate", src: "", thumb: "" },
+  { id: 2, title: "Corporate Day — Sequence", category: "corporate", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/1%20Low%20res.mp4", thumb: "" },
   { id: 3, title: "Product Launch TVC", category: "ads", src: "", thumb: "" },
   { id: 4, title: "Behind the Lens", category: "bts", src: "", thumb: "" },
   { id: 5, title: "Director's Cut — Campaign", category: "commercial", src: "", thumb: "" },
@@ -564,7 +564,11 @@ function buildCard(p) {
   info.innerHTML = `<div class="card-category">${p.category}</div><div class="card-title">${p.title}</div>`;
   card.appendChild(info);
 
-  card.addEventListener('click', () => openModal(p));
+  card.addEventListener('click', () => {
+    if (!p.src) return;
+    openModal(p);
+  });
+  if (!p.src) card.style.cursor = 'not-allowed';
   return card;
 }
 
