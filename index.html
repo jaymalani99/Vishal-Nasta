@@ -283,13 +283,10 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 30%, rgba(8,10,13,0.85) 100%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    background: linear-gradient(to bottom, transparent 40%, rgba(8,10,13,0.82) 100%);
+    opacity: 1;
     z-index: 2;
   }
-
-  .video-card:hover::after { opacity: 1; }
 
   .video-card img {
     width: 100%;
@@ -303,36 +300,6 @@
   .video-card:hover img {
     transform: scale(1.05);
     filter: saturate(1) brightness(1);
-  }
-
-  .card-info {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 16px 18px;
-    z-index: 3;
-    transform: translateY(6px);
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-
-  .video-card:hover .card-info {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .card-category {
-    font-size: 8px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
-  .card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--text-primary);
   }
 
   .play-icon {
@@ -361,21 +328,50 @@
     transform: translate(-50%, -50%) scale(1);
   }
 
+  .card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 16px;
+    z-index: 3;
+    transition: all 0.3s ease;
+  }
+
   .card-roles {
     display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
+    gap: 5px;
+    margin-bottom: 6px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all 0.3s ease;
+  }
+
+  .video-card:hover .card-roles {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .card-role-tag {
     font-size: 7px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(14,16,19,0.85);
+    color: rgba(14,16,19,0.9);
     background: var(--accent);
-    padding: 3px 8px;
+    padding: 3px 7px;
     border-radius: 1px;
     font-weight: 500;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.2;
+    transition: color 0.2s;
+  }
+
+  .video-card:hover .card-title {
+    color: #fff;
   }
 
   /* THUMB PLACEHOLDER */
