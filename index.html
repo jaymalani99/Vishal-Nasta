@@ -213,7 +213,7 @@
     display: flex;
     gap: 12px;
     overflow-x: auto;
-    padding: 0 56px 0;
+    padding: 0 56px;
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-snap-type: x mandatory;
@@ -765,8 +765,9 @@ categoryOrder.forEach(cat => {
   const scroll = document.createElement('div');
   scroll.className = 'row-scroll';
 
-  // Card width = (viewport - 2*56px padding - gaps) / visible cards, leaving last one peeking
-  const cardW = Math.round((window.innerWidth - 112) / 3.4);
+  // Card width: content area = viewport - 2*56px padding, show 3 cards + peek of 4th
+  const contentW = window.innerWidth - 112;
+  const cardW = Math.round((contentW - (12 * 2)) / 3.15);
   items.forEach(p => {
     const card = buildCard(p);
     card.style.flex = `0 0 ${cardW}px`;
