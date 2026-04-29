@@ -165,70 +165,72 @@
     display: block;
   }
 
-  /* FILTERS */
-  .filters-bar {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 36px 56px;
+  /* ROWS */
+  .rows-wrapper {
+    padding: 40px 0 80px;
+  }
+
+  .category-row {
+    margin-bottom: 48px;
+  }
+
+  .row-header {
     display: flex;
     align-items: center;
-    gap: 6px;
-    border-bottom: 0.5px solid var(--border);
+    gap: 16px;
+    padding: 0 56px 16px;
   }
 
-  .filter-label {
+  .row-label {
     font-size: 9px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--text-label);
-    margin-right: 12px;
-  }
-
-  .filter-btn {
-    background: transparent;
-    border: 0.5px solid transparent;
-    color: var(--text-secondary);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 9px;
+    color: var(--accent);
     font-weight: 400;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    padding: 8px 18px;
-    cursor: pointer;
-    transition: all 0.2s;
   }
 
-  .filter-btn:hover {
+  .row-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
     color: var(--text-primary);
-    border-color: var(--border);
+    letter-spacing: 0.01em;
   }
 
-  .filter-btn.active {
-    background: var(--accent);
-    color: #0e1013;
-    border-color: var(--accent);
-    font-weight: 500;
+  .row-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
   }
 
-  /* GRID */
-  .grid-wrapper {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 2px 0 0;
+  .row-count {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--text-label);
   }
 
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
+  .row-scroll {
+    display: flex;
+    gap: 3px;
+    overflow-x: auto;
+    padding: 0 56px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
   }
 
+  .row-scroll::-webkit-scrollbar { display: none; }
+
+  /* CARD */
   .video-card {
     position: relative;
+    flex: 0 0 380px;
     aspect-ratio: 16/9;
     overflow: hidden;
     cursor: pointer;
     background: var(--bg-card);
+    scroll-snap-align: start;
+    border-radius: 2px;
   }
 
   .video-card::after {
@@ -260,11 +262,11 @@
   .card-info {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    padding: 20px 22px;
+    padding: 16px 18px;
     z-index: 3;
-    transform: translateY(8px);
+    transform: translateY(6px);
     opacity: 0;
-    transition: all 0.35s ease;
+    transition: all 0.3s ease;
   }
 
   .video-card:hover .card-info {
@@ -277,34 +279,33 @@
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
 
   .card-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--text-primary);
-    letter-spacing: 0.01em;
   }
 
   .play-icon {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%) scale(0.85);
-    width: 48px; height: 48px;
+    width: 44px; height: 44px;
     border: 0.5px solid rgba(200,184,154,0.6);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: all 0.35s ease;
+    transition: all 0.3s ease;
     z-index: 3;
   }
 
   .play-icon svg {
-    width: 13px; height: 13px;
+    width: 12px; height: 12px;
     fill: var(--accent);
     margin-left: 3px;
   }
@@ -313,8 +314,6 @@
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
-
-  .video-card.hidden { display: none; }
 
   /* THUMB PLACEHOLDER */
   .thumb-placeholder {
@@ -485,10 +484,9 @@
     .hero-right { align-items: flex-start; }
     .hero-sub { text-align: left; max-width: 100%; }
     .hero-stat { gap: 28px; }
-    .filters-bar { padding: 20px; gap: 6px; flex-wrap: wrap; }
-    .filter-btn { padding: 6px 12px; font-size: 8px; }
-    .grid-wrapper { padding: 0; }
-    .video-grid { grid-template-columns: 1fr; gap: 2px; }
+    .row-header { padding: 0 20px 12px; }
+    .row-scroll { padding: 0 20px; }
+    .video-card { flex: 0 0 280px; }
     .card-info { opacity: 1; transform: translateY(0); }
     .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     footer { grid-template-columns: 1fr; gap: 20px; padding: 36px 20px; }
@@ -504,6 +502,8 @@
     .nav-role { font-size: 8px; letter-spacing: 0.14em; }
     .hero-title { font-size: 48px; }
     .stat-num { font-size: 28px; }
+    .video-card { flex: 0 0 240px; }
+    .row-title { font-size: 18px; }
   }
 </style>
 </head>
@@ -541,20 +541,7 @@
   </div>
 </section>
 
-<div class="filters-bar">
-  <span class="filter-label">Filter</span>
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="commercial">Commercial</button>
-  <button class="filter-btn" data-filter="bts">BTS</button>
-  <button class="filter-btn" data-filter="corporate">Corporate</button>
-  <button class="filter-btn" data-filter="ads">Ads</button>
-  <button class="filter-btn" data-filter="music">Music</button>
-  <button class="filter-btn" data-filter="short film">Short Film</button>
-</div>
-
-<div class="grid-wrapper">
-  <div class="video-grid" id="videoGrid"></div>
-</div>
+<div class="rows-wrapper" id="rowsWrapper"></div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-inner">
@@ -603,7 +590,16 @@ const projects = [
   { id: 15, title: "Leadership Film", category: "corporate", src: "", thumb: "" },
 ];
 
-const grid = document.getElementById('videoGrid');
+const categoryMeta = {
+  bts:         { label: "On Set",       title: "Behind the Scenes" },
+  ads:         { label: "Advertising",  title: "Ads & Commercials" },
+  corporate:   { label: "Corporate",    title: "Corporate Films" },
+  commercial:  { label: "Commercial",   title: "Brand Films" },
+  music:       { label: "Music",        title: "Music & Events" },
+  "short film":{ label: "Narrative",    title: "Short Films" },
+};
+
+const categoryOrder = ["ads", "bts", "corporate", "commercial", "music", "short film"];
 
 function generateThumb(videoSrc, imgEl) {
   const v = document.createElement('video');
@@ -624,7 +620,6 @@ function generateThumb(videoSrc, imgEl) {
 function buildCard(p) {
   const card = document.createElement('div');
   card.className = 'video-card';
-  card.style.position = 'relative';
   card.dataset.category = p.category;
 
   if (p.thumb) {
@@ -660,7 +655,7 @@ function buildCard(p) {
 
   const info = document.createElement('div');
   info.className = 'card-info';
-  info.innerHTML = `<div class="card-category">${p.category}</div><div class="card-title">${p.title}</div>`;
+  info.innerHTML = `<div class="card-title">${p.title}</div>`;
   card.appendChild(info);
 
   card.addEventListener('click', () => { if (p.src) openModal(p); });
@@ -668,19 +663,36 @@ function buildCard(p) {
   return card;
 }
 
-projects.forEach(p => grid.appendChild(buildCard(p)));
+// Build rows
+const wrapper = document.getElementById('rowsWrapper');
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.filter;
-    document.querySelectorAll('.video-card').forEach(c => {
-      c.classList.toggle('hidden', f !== 'all' && c.dataset.category !== f);
-    });
-  });
+categoryOrder.forEach(cat => {
+  const items = projects.filter(p => p.category === cat);
+  if (!items.length) return;
+  const meta = categoryMeta[cat] || { label: cat, title: cat };
+
+  const row = document.createElement('div');
+  row.className = 'category-row';
+
+  const header = document.createElement('div');
+  header.className = 'row-header';
+  header.innerHTML = `
+    <span class="row-label">${meta.label}</span>
+    <span class="row-title">${meta.title}</span>
+    <div class="row-line"></div>
+    <span class="row-count">${items.filter(p => p.src).length} films</span>
+  `;
+  row.appendChild(header);
+
+  const scroll = document.createElement('div');
+  scroll.className = 'row-scroll';
+  items.forEach(p => scroll.appendChild(buildCard(p)));
+  row.appendChild(scroll);
+
+  wrapper.appendChild(row);
 });
 
+// Modal
 const overlay = document.getElementById('modalOverlay');
 const modalVideo = document.getElementById('modalVideo');
 
