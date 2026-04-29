@@ -213,36 +213,67 @@
     display: flex;
     gap: 12px;
     overflow-x: auto;
-    padding: 0 56px 12px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-hover) transparent;
+    padding: 0 56px 0;
+    scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
   }
 
-  .row-scroll::-webkit-scrollbar {
-    height: 2px;
+  .row-scroll::-webkit-scrollbar { display: none; }
+
+  .row-outer {
+    position: relative;
   }
 
-  .row-scroll::-webkit-scrollbar-track {
-    background: transparent;
+  .row-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(14,16,19,0.75);
+    border: 0.5px solid var(--border-hover);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    backdrop-filter: blur(8px);
   }
 
-  .row-scroll::-webkit-scrollbar-thumb {
-    background: var(--border-hover);
-    border-radius: 2px;
+  .row-arrow:hover {
+    background: rgba(200,184,154,0.15);
+    border-color: var(--accent);
   }
+
+  .row-arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--text-primary);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .row-arrow.left { left: 16px; }
+  .row-arrow.right { right: 16px; }
+  .row-arrow.hidden { opacity: 0; pointer-events: none; }
 
   /* CARD */
   .video-card {
     position: relative;
-    flex: 0 0 380px;
     aspect-ratio: 16/9;
     overflow: hidden;
     cursor: pointer;
     background: var(--bg-card);
     scroll-snap-align: start;
     border-radius: 2px;
+    flex-shrink: 0;
   }
 
   .video-card::after {
@@ -515,7 +546,8 @@
     .hero-stat { gap: 28px; }
     .row-header { padding: 0 20px 12px; }
     .row-scroll { padding: 0 20px; }
-    .video-card { flex: 0 0 280px; }
+    .row-arrow.left { left: 4px; }
+    .row-arrow.right { right: 4px; }
     .card-info { opacity: 1; transform: translateY(0); }
     .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     footer { grid-template-columns: 1fr; gap: 20px; padding: 36px 20px; }
@@ -531,7 +563,6 @@
     .nav-role { font-size: 8px; letter-spacing: 0.14em; }
     .hero-title { font-size: 48px; }
     .stat-num { font-size: 28px; }
-    .video-card { flex: 0 0 240px; }
     .row-title { font-size: 18px; }
   }
 </style>
@@ -720,10 +751,49 @@ categoryOrder.forEach(cat => {
   `;
   row.appendChild(header);
 
+  const outer = document.createElement('div');
+  outer.className = 'row-outer';
+
+  const btnLeft = document.createElement('button');
+  btnLeft.className = 'row-arrow left hidden';
+  btnLeft.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>`;
+
+  const btnRight = document.createElement('button');
+  btnRight.className = 'row-arrow right';
+  btnRight.innerHTML = `<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`;
+
   const scroll = document.createElement('div');
   scroll.className = 'row-scroll';
-  items.forEach(p => scroll.appendChild(buildCard(p)));
-  row.appendChild(scroll);
+
+  // Card width = (viewport - 2*56px padding - gaps) / visible cards, leaving last one peeking
+  const cardW = Math.round((window.innerWidth - 112) / 3.4);
+  items.forEach(p => {
+    const card = buildCard(p);
+    card.style.flex = `0 0 ${cardW}px`;
+    scroll.appendChild(card);
+  });
+
+  // Arrow logic
+  const updateArrows = () => {
+    btnLeft.classList.toggle('hidden', scroll.scrollLeft <= 8);
+    btnRight.classList.toggle('hidden', scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 8);
+  };
+
+  btnLeft.addEventListener('click', () => {
+    scroll.scrollBy({ left: -(cardW + 12), behavior: 'smooth' });
+  });
+  btnRight.addEventListener('click', () => {
+    scroll.scrollBy({ left: cardW + 12, behavior: 'smooth' });
+  });
+  scroll.addEventListener('scroll', updateArrows, { passive: true });
+
+  // Hide right arrow if content fits
+  setTimeout(updateArrows, 100);
+
+  outer.appendChild(btnLeft);
+  outer.appendChild(scroll);
+  outer.appendChild(btnRight);
+  row.appendChild(outer);
 
   wrapper.appendChild(row);
 });
