@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vishal Nasta — Cinematographer & DOP</title>
+<title>Vishal Nasta — Cinematographer, Editor & Colorist</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -477,21 +477,33 @@
   }
 
   @media (max-width: 960px) {
-    nav { padding: 18px 24px; }
-    .hero { grid-template-columns: 1fr; padding: 120px 24px 48px; }
+    nav { padding: 16px 20px; }
+    .nav-links { gap: 24px; }
+    .nav-links a { font-size: 9px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 20px 40px; gap: 28px; }
+    .hero-title { font-size: clamp(52px, 12vw, 80px); }
     .hero-right { align-items: flex-start; }
-    .hero-sub { text-align: left; }
-    .filters-bar { padding: 28px 24px; }
+    .hero-sub { text-align: left; max-width: 100%; }
+    .hero-stat { gap: 28px; }
+    .filters-bar { padding: 20px; gap: 6px; flex-wrap: wrap; }
+    .filter-btn { padding: 6px 12px; font-size: 8px; }
     .grid-wrapper { padding: 0; }
-    .video-grid { grid-template-columns: repeat(1, 1fr); }
-    footer { grid-template-columns: 1fr; gap: 24px; padding: 40px 24px; }
+    .video-grid { grid-template-columns: 1fr; gap: 2px; }
+    .card-info { opacity: 1; transform: translateY(0); }
+    .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    footer { grid-template-columns: 1fr; gap: 20px; padding: 36px 20px; }
     .footer-right { text-align: left; }
     .scroll-hint { display: none; }
+    .modal-overlay { padding: 16px; }
+    .modal-close { top: -32px; font-size: 8px; }
+    .modal-title { font-size: 18px; }
   }
 
   @media (max-width: 560px) {
-    .video-grid { grid-template-columns: 1fr; }
-    .hero-title { font-size: 56px; }
+    .nav-name { font-size: 14px; }
+    .nav-role { font-size: 8px; letter-spacing: 0.14em; }
+    .hero-title { font-size: 48px; }
+    .stat-num { font-size: 28px; }
   }
 </style>
 </head>
@@ -500,7 +512,7 @@
 <nav>
   <div class="nav-brand">
     <span class="nav-name">Vishal Nasta</span>
-    <span class="nav-role">Cinematographer &amp; DOP</span>
+    <span class="nav-role">Cinematographer &amp; Editor &amp; Colorist</span>
   </div>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
@@ -518,16 +530,12 @@
     <p class="hero-sub">Commercials, corporate films, brand stories and advertising — shot with intention.</p>
     <div class="hero-stat">
       <div class="stat-item">
-        <span class="stat-num">15+</span>
+        <span class="stat-num">50+</span>
         <span class="stat-label">Projects</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num">5</span>
+        <span class="stat-num">7+</span>
         <span class="stat-label">Years</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">4</span>
-        <span class="stat-label">Disciplines</span>
       </div>
     </div>
   </div>
@@ -540,6 +548,8 @@
   <button class="filter-btn" data-filter="bts">BTS</button>
   <button class="filter-btn" data-filter="corporate">Corporate</button>
   <button class="filter-btn" data-filter="ads">Ads</button>
+  <button class="filter-btn" data-filter="music">Music</button>
+  <button class="filter-btn" data-filter="short film">Short Film</button>
 </div>
 
 <div class="grid-wrapper">
@@ -572,18 +582,22 @@
 
 <script>
 const projects = [
-  { id: 1, title: "Brand Film — Untitled", category: "commercial", src: "", thumb: "" },
-  { id: 2, title: "Corporate Day — Sequence", category: "corporate", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/1%20Low%20res.mp4", thumb: "" },
-  { id: 3, title: "Blinkit Ad", category: "ads", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Blinkit%20Final%20Ad.mp4", thumb: "" },
-  { id: 4, title: "Behind the Lens", category: "bts", src: "", thumb: "" },
-  { id: 5, title: "Director's Cut — Campaign", category: "commercial", src: "", thumb: "" },
-  { id: 6, title: "Talking Head — Series 01", category: "corporate", src: "", thumb: "" },
-  { id: 7, title: "30s Spot — Seasonal", category: "ads", src: "", thumb: "" },
-  { id: 8, title: "On Set — Behind the Scenes", category: "bts", src: "", thumb: "" },
-  { id: 9, title: "Brand Story — Launch", category: "commercial", src: "", thumb: "" },
+  { id: 2,  title: "Corporate Film", category: "corporate", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/1%20Low%20res.mp4", thumb: "" },
+  { id: 3,  title: "Blinkit Ad", category: "ads", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Blinkit%20Final%20Ad.mp4", thumb: "" },
+  { id: 16, title: "Fitness Brand Campaign", category: "ads", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/3%20Low%20Res%20Campaign%204K%20Render.mp4", thumb: "" },
+  { id: 17, title: "Centre Fresh — BTS", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/4%20Low%20Res%20Centre%20Fresh.mp4", thumb: "" },
+  { id: 18, title: "Dhoni Reel", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/5%20Low%20Res%20Dhoni%20Reel%20Final.mp4", thumb: "" },
+  { id: 19, title: "Dil Dosti Dilema", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/6%20Low%20Res%20Dil%20Dosti%20Dilema%20Reel.mp4", thumb: "" },
+  { id: 20, title: "Fitness Film", category: "ads", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/7%20Low%20res%20Fitness%20Film%204K.mp4", thumb: "" },
+  { id: 21, title: "ISL — BTS", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/8%20Low%20Res%20Isl%20Bts%20New%20Cut.mp4", thumb: "" },
+  { id: 22, title: "RK & Alia — Fabricare Dharma 2.0", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/09%20Low%20Res%20Rk%20%26%20Alia%20Fabricare%20Dharma%202.0(1).mp4", thumb: "" },
+  { id: 23, title: "Rinku × Friend Edit", category: "bts", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/10%20Rinku%20X%20Frnd%20Edit.mp4", thumb: "" },
+  { id: 24, title: "Siege Gadbad — After Movie", category: "music", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/11%20Low%20res%20Siege%20Gadbad%20Hd.mp4", thumb: "" },
+  { id: 25, title: "Yellow — Short Film", category: "short film", src: "https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/10%20Low%20res%20Yellow%20Final.mp4", thumb: "" },
+  { id: 5,  title: "Director's Cut — Campaign", category: "commercial", src: "", thumb: "" },
+  { id: 6,  title: "Talking Head — Series 01", category: "corporate", src: "", thumb: "" },
+  { id: 9,  title: "Brand Story — Launch", category: "commercial", src: "", thumb: "" },
   { id: 10, title: "Internal Film — Annual Meet", category: "corporate", src: "", thumb: "" },
-  { id: 11, title: "Digital Ad — 15s", category: "ads", src: "", thumb: "" },
-  { id: 12, title: "Shoot Day — Raw Moments", category: "bts", src: "", thumb: "" },
   { id: 13, title: "TV Commercial — Festive", category: "ads", src: "", thumb: "" },
   { id: 14, title: "Brand Documentary", category: "commercial", src: "", thumb: "" },
   { id: 15, title: "Leadership Film", category: "corporate", src: "", thumb: "" },
