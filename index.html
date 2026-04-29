@@ -213,7 +213,9 @@
     display: flex;
     gap: 12px;
     overflow-x: auto;
-    padding: 0 56px;
+    padding-left: 56px;
+    padding-right: 56px;
+    scroll-padding-left: 56px;
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-snap-type: x mandatory;
@@ -260,13 +262,14 @@
     stroke-linejoin: round;
   }
 
-  .row-arrow.left { left: 16px; }
-  .row-arrow.right { right: 16px; }
+  .row-arrow.left { left: 64px; }
+  .row-arrow.right { right: 8px; }
   .row-arrow.hidden { opacity: 0; pointer-events: none; }
 
   /* CARD */
   .video-card {
     position: relative;
+    flex: 0 0 calc((100vw - 112px - 24px) / 3.1);
     aspect-ratio: 16/9;
     overflow: hidden;
     cursor: pointer;
@@ -765,12 +768,9 @@ categoryOrder.forEach(cat => {
   const scroll = document.createElement('div');
   scroll.className = 'row-scroll';
 
-  // Card width: content area = viewport - 2*56px padding, show 3 cards + peek of 4th
-  const contentW = window.innerWidth - 112;
-  const cardW = Math.round((contentW - (12 * 2)) / 3.15);
+  const cardW = Math.round((window.innerWidth - 112 - 24) / 3.15);
   items.forEach(p => {
     const card = buildCard(p);
-    card.style.flex = `0 0 ${cardW}px`;
     scroll.appendChild(card);
   });
 
