@@ -539,33 +539,75 @@
   }
 
   @media (max-width: 960px) {
-    nav { padding: 16px 20px; }
-    .nav-links { gap: 24px; }
-    .nav-links a { font-size: 9px; }
-    .hero { grid-template-columns: 1fr; padding: 100px 20px 40px; gap: 28px; }
-    .hero-title { font-size: clamp(52px, 12vw, 80px); }
-    .hero-right { align-items: flex-start; }
-    .hero-sub { text-align: left; max-width: 100%; }
-    .hero-stat { gap: 28px; }
-    .row-header { padding: 0 20px 12px; }
-    .row-scroll { padding: 0 20px; }
+    /* NAV */
+    nav { padding: 14px 20px; }
+    .nav-brand { gap: 1px; }
+    .nav-name { font-size: 15px; }
+    .nav-role { font-size: 7.5px; letter-spacing: 0.16em; white-space: nowrap; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 9px; letter-spacing: 0.12em; }
+
+    /* HERO */
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 80px 20px 32px;
+      gap: 16px;
+      border-bottom: none;
+    }
+    .hero-title { font-size: 52px; line-height: 0.92; }
+    .hero-eyebrow { margin-bottom: 14px; }
+    .hero-right { align-items: flex-start; gap: 16px; }
+    .hero-sub { text-align: left; max-width: 100%; font-size: 12px; }
+    .hero-stat { gap: 24px; }
+    .stat-num { font-size: 30px; }
+
+    /* ROWS */
+    .rows-wrapper { padding: 24px 0 60px; }
+    .category-row { margin-bottom: 36px; }
+    .row-header { padding: 0 20px 10px; gap: 10px; }
+    .row-title { font-size: 20px; }
+    .row-label { font-size: 8px; }
+
+    /* SCROLL - mobile shows 1.2 cards */
+    .row-scroll {
+      padding-left: 20px;
+      padding-right: 20px;
+      scroll-padding-left: 20px;
+      gap: 10px;
+    }
+
+    /* CARD - 1.2 visible on mobile */
+    .video-card {
+      flex: 0 0 calc((100vw - 40px) / 1.2) !important;
+    }
+
+    /* Always show info on mobile - no hover */
+    .card-info { opacity: 1; transform: translateY(0); padding: 12px 14px; }
+    .card-roles { display: none; } /* hide tags on mobile - too small */
+    .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); width: 36px; height: 36px; }
+
+    /* ARROWS */
+    .row-arrow { width: 30px; height: 30px; }
     .row-arrow.left { left: 4px; }
     .row-arrow.right { right: 4px; }
-    .card-info { opacity: 1; transform: translateY(0); }
-    .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    footer { grid-template-columns: 1fr; gap: 20px; padding: 36px 20px; }
+    .row-arrow svg { width: 11px; height: 11px; }
+
+    /* FOOTER */
+    footer { grid-template-columns: 1fr; gap: 16px; padding: 32px 20px; }
     .footer-right { text-align: left; }
+    .footer-left { font-size: 22px; }
+
+    /* MODAL */
     .scroll-hint { display: none; }
-    .modal-overlay { padding: 16px; }
-    .modal-close { top: -32px; font-size: 8px; }
-    .modal-title { font-size: 18px; }
+    .modal-overlay { padding: 12px; align-items: flex-end; }
+    .modal-inner { max-width: 100%; }
+    .modal-close { top: -28px; font-size: 8px; }
+    .modal-title { font-size: 16px; }
   }
 
   @media (max-width: 560px) {
-    .nav-name { font-size: 14px; }
-    .nav-role { font-size: 8px; letter-spacing: 0.14em; }
-    .hero-title { font-size: 48px; }
-    .stat-num { font-size: 28px; }
+    .hero-title { font-size: 44px; }
+    .stat-num { font-size: 26px; }
     .row-title { font-size: 18px; }
   }
 </style>
