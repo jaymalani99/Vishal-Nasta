@@ -211,15 +211,27 @@
 
   .row-scroll {
     display: flex;
-    gap: 3px;
+    gap: 12px;
     overflow-x: auto;
-    padding: 0 56px;
-    scrollbar-width: none;
+    padding: 0 56px 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-hover) transparent;
     -ms-overflow-style: none;
     scroll-snap-type: x mandatory;
   }
 
-  .row-scroll::-webkit-scrollbar { display: none; }
+  .row-scroll::-webkit-scrollbar {
+    height: 2px;
+  }
+
+  .row-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .row-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-hover);
+    border-radius: 2px;
+  }
 
   /* CARD */
   .video-card {
@@ -313,6 +325,23 @@
   .video-card:hover .play-icon {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+
+  .card-roles {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .card-role-tag {
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(14,16,19,0.85);
+    background: var(--accent);
+    padding: 3px 8px;
+    border-radius: 1px;
+    font-weight: 500;
   }
 
   /* THUMB PLACEHOLDER */
@@ -655,7 +684,14 @@ function buildCard(p) {
 
   const info = document.createElement('div');
   info.className = 'card-info';
-  info.innerHTML = `<div class="card-title">${p.title}</div>`;
+  info.innerHTML = `
+    <div class="card-roles">
+      <span class="card-role-tag">Shot</span>
+      <span class="card-role-tag">Edited</span>
+      <span class="card-role-tag">Colour</span>
+    </div>
+    <div class="card-title">${p.title}</div>
+  `;
   card.appendChild(info);
 
   card.addEventListener('click', () => { if (p.src) openModal(p); });
@@ -667,7 +703,7 @@ function buildCard(p) {
 const wrapper = document.getElementById('rowsWrapper');
 
 categoryOrder.forEach(cat => {
-  const items = projects.filter(p => p.category === cat);
+  const items = projects.filter(p => p.category === cat && p.src);
   if (!items.length) return;
   const meta = categoryMeta[cat] || { label: cat, title: cat };
 
@@ -680,7 +716,7 @@ categoryOrder.forEach(cat => {
     <span class="row-label">${meta.label}</span>
     <span class="row-title">${meta.title}</span>
     <div class="row-line"></div>
-    <span class="row-count">${items.filter(p => p.src).length} films</span>
+    <span class="row-count">${items.length} films</span>
   `;
   row.appendChild(header);
 
